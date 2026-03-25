@@ -1,15 +1,1 @@
-{
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
-      ]
-    }
-  ]
-}
+ewogICJmcmFtZXdvcmsiOiAidml0ZSIsCiAgImJ1aWxkQ29tbWFuZCI6ICJucG0gcnVuIGJ1aWxkIiwKICAib3V0cHV0RGlyZWN0b3J5IjogImRpc3QiLAogICJpbnN0YWxsQ29tbWFuZCI6ICJucG0gaW5zdGFsbCIsCiAgInJld3JpdGVzIjogWwogICAgeyAic291cmNlIjogIi8oLiopIiwgImRlc3RpbmF0aW9uIjogIi9pbmRleC5odG1sIiB9CiAgXSwKICAiaGVhZGVycyI6IFsKICAgIHsKICAgICAgInNvdXJjZSI6ICIvKC4qKSIsCiAgICAgICJoZWFkZXJzIjogWwogICAgICAgIHsgImtleSI6ICJYLUNVUC1UeXBlLU9wdGlvbnMiLCAidmFsdWUiOiAibm9zbmlmZiIgfSwKICAgICAgICB7ICJrZXkiOiAiWC1GcmFtZS1PcHRpb25zIiwgInZhbHVlIjogIlNBTUVPUklHSU4iIH0sCiAgICAgICAgeyAia2V5IjogIlJlZmVycmVyLVBvbGljeSIsICJ2YWx1ZSI6ICJzdHJpY3Qtb3JpZ2luLXdoZW4tY3Jvc3Mtb3JpZ2luIiB9CiAgICAgIF0KICAgIH0KICBdCn0K
