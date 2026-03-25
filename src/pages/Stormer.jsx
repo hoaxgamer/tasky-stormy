@@ -9,8 +9,36 @@ import { useNotifications } from "../contexts/NotificationsContext";
 import StormCard from "../components/StormCard";
 import ConfirmDialog from "../components/ConfirmDialog";
 import { format } from "date-fns";
-import { Layers, Search, Expand, Brain, Pencil, Trash2, ChevronRight, Loader2, FileText, Wand2 } from "lucide-react";
-import ReactMarkdown from "react-markdown";
+import { Layers, Search, Expand, Brain, Pencil, Trash2, Loader2, FileText, Wand2 } from "lucide-react";
+
+// Simple markdown renderer — no external dep needed
+function SimpleMarkdown({ content }) {
+  if (!content) return null;
+  const lines = content.split("\n");
+  const elements = [];
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+    if (line.startsWith("## ")) {
+      elements.push(<h2 key={i} className="text-base font-semibold text-slate-200 mt-4 mb-1.5">{line.slice(3)}</h2>);
+    } else if (line.startsWith("# ")) {
+      elements.push(<h1 key={i} className="text-lg font-bold text-slate-100 mt-4 mb-2">{line.slice(2)}</h1>);
+    } else if (line.startsWith("### ")) {
+      elements.push(<h3 key={i} className="text-sm font-semibold text-slate-300 mt-3 mb-1">{line.slice(4)}</h3>);
+    } else if (line.startsWith("- ") || line.startsWith("* ")) {
+      elements.push(<li key={i} className="text-sm text-slate-300 leading-relaxed ml-4 list-disc">{line.slice(2)}</li>);
+    } else if (/^\d+\. /.test(line)) {
+      const text = line.replace(/^\d+\. /, "");
+      elements.push(<li key={i} className="text-sm text-slate-300 leading-relaxed ml-4 list-decimal">{text}</li>);
+    } else if (line.trim() === "") {
+      elements.push(<div key={i} className="h-2" />);
+    } else {
+      elements.push(<p key={i} className="text-sm text-slate-300 leading-relaxed">{line}</p>);
+    }
+    i++;
+  }
+  return <div className="space-y-1">{elements}</div>;
+}
 
 export default function Stormer() {
   const [searchParams] = useSearchParams();
@@ -58,7 +86,7 @@ export default function Stormer() {
     setExpandLoading(true);
     try {
       const fn = httpsCallable(functions, "expandStorm");
-      const res = await fn({ sessionId: selected.id, rawInput: selected.rawInput });
+      await fn({ sessionId: selected.id, rawInput: selected.rawInput });
       addToast("Storm expanded!", "success");
     } catch (err) {
       addToast("Expansion failed — try again.", "error");
@@ -218,8 +246,8 @@ export default function Stormer() {
                   <Expand size={13} className="text-indigo-400" />
                   <span className="text-xs font-semibold text-indigo-400 uppercase tracking-wider">Expanded</span>
                 </div>
-                <div className="bg-indigo-500/5 border border-indigo-500/20 rounded-xl p-4 prose prose-invert prose-sm max-w-none">
-                  <ReactMarkdown>{selected.expandedContent}</ReactMarkdown>
+                <div className="bg-indigo-500/5 border border-indigo-500/20 rounded-xl p-4">
+                  <SimpleMarkdown content={selected.expandedContent} />
                 </div>
               </div>
             )}
