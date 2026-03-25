@@ -1,1 +1,8 @@
-ewogICJyZXdyaXRlcyI6IFsKICAgIHsgInNvdXJjZSI6ICIvOnBhdGgqIiwgImRlc3RpbmF0aW9uIjogIi9pbmRleC5odG1sIiB9CiAgXQp9Cg==
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite"
+}
